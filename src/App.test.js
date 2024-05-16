@@ -7,9 +7,9 @@ import { store } from './Store/Store';
 test('renders learn react link', () => {
   render(
     <Provider store={store}>
-    <Router>
-    <App />
-    </Router>
+      <Router>
+        <App />
+      </Router>
     </Provider>
 );
   // const linkElement = screen.getByText(/learn react/i);
