@@ -1,0 +1,10 @@
+.col {
+   width: 30rem;
+   max-width: 100%;
+}
+
+.card {
+    width: 25rem;
+    border-radius: 30px;
+    background-color:beige;
+}
