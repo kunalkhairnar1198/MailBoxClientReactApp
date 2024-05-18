@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Navbar} from 'react-bootstrap'
+import Compose from '../pages/MailComponent/Compose'
 const MainNavigation = () => {
   return (
     <>
@@ -7,7 +8,9 @@ const MainNavigation = () => {
             <Container>
               <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>
             </Container>
+           
         </Navbar>
+        <Compose/>
     </>
   )
 }

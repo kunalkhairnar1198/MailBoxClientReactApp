@@ -7,6 +7,9 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
 import { store } from './Store/Store';
 import {Provider} from 'react-redux';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
