@@ -68,6 +68,7 @@ const Signup = () => {
                 console.log('Authentication succesful', data)
                 dispatch(LoaderActions.stopIsloading())
                 dispatch(AuthActions.loginHandler(data.idToken))
+                localStorage.setItem('email', data.email)
                 history.replace('/mainnavigation')
 
             }else{

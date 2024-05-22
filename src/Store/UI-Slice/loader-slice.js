@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialUiState ={
     isVisible:false,
+    isOpen:false,
 }
 
 const LoaderSlice = createSlice({
@@ -13,6 +14,9 @@ const LoaderSlice = createSlice({
         },
         stopIsloading(state,action){
             state.isVisible  = false
+        },
+        openPortal(state, action){
+            state.isOpen = !state.isOpen;
         }
     }
 })

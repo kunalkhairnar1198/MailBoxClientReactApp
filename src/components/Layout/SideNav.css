@@ -1,0 +1,41 @@
+.main-container {
+    transition: margin 0.3s ease;
+    
+  }
+  
+.sidebar-open .content-col {
+    margin-left: 15rem; 
+}
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 15rem;
+    margin-top: 73px;
+    transition: left 0.3s;
+    z-index: 1040; 
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+  
+  .sidebar-closed .sidebar {
+    transform: translateX(-15rem); 
+  }
+  
+  .sidebar .nav-link {
+    color: #ffffff;
+    padding: 10px;
+    text-decoration: none;
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: #ddd;
+    border-radius: 35%;
+    color: #000000;
+  }
+  
