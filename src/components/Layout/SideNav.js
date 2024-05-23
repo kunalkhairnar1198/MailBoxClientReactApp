@@ -22,7 +22,8 @@ const SideNav = ({show, onHide}) => {
             <Offcanvas.Body>
               <Nav className="flex-column">
                 <Nav.Link as={NavLink} to="/compose" onClick={openModalhandler} >Compose</Nav.Link>
-                <Nav.Link >Send</Nav.Link>
+                <Nav.Link as={NavLink} to='/inbox'>Inbox</Nav.Link>
+                <Nav.Link >Sent</Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Offcanvas>
