@@ -8,6 +8,7 @@ import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
 import { BrowserRouter, Route } from 'react-router-dom/cjs/react-router-dom.min';
 import Compose from '../pages/MailComponent/Compose';
 import Inbox from '../pages/MailComponent/Inbox/Inbox';
+import Sent from '../pages/MailComponent/SendBox/Sent';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const SideNav = ({show, onHide}) => {
               <Nav className="flex-column">
                 <Nav.Link as={NavLink} to="/compose" onClick={openModalhandler} >Compose</Nav.Link>
                 <Nav.Link as={NavLink} to='/inbox'>Inbox</Nav.Link>
-                <Nav.Link >Sent</Nav.Link>
+                <Nav.Link as={NavLink} to='./sent'>Sent</Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Offcanvas>
@@ -35,6 +36,7 @@ const SideNav = ({show, onHide}) => {
         <Col xs={10} className="content-col">
             <Route  path='/compose' component={Compose} />
             <Route path='/inbox' component={Inbox}/>
+            <Route path='/sent' component={Sent}/>
         </Col>
       </Row>
     </Container>

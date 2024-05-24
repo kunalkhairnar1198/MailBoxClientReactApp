@@ -1,25 +1,23 @@
 import React, { useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
-import {  getSentMails, receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice';
+import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice';
 import {useDispatch, useSelector} from 'react-redux';
 import { format } from 'date-fns'; 
 
-const formatDate = (timestamp) => {
-  return format(new Date(timestamp), 'MMMdd'); 
-};
-
-const Inbox = () => {
+const Sent = () => {
   const dispatch = useDispatch()
-  const receivedMails = useSelector(state => state.mail.receivedMail)
-  console.log(receivedMails)
+  const mails = useSelector(state => state.mail.sentMail)
+  console.log(mails)
 
   useEffect(()=>{
-    dispatch(receivedMailsGet())
+    dispatch(getSentMails())
   },[dispatch])
 
-  
+  const formatDate = (timestamp) => {
+    return format(new Date(timestamp), 'MMMdd'); 
+  };
 
-  const mapData = receivedMails.map((item, index)=>(
+  const mapData = mails.map((item, index)=>(
       <tr key={item.id}>
         <th scope="row">{index + 1}</th>
         <td>{item.subject}</td>
@@ -34,12 +32,12 @@ const Inbox = () => {
   return (
     <Container className="mt-4">
       <Card className="mx-auto" style={{ maxWidth: '150%', minWidth: '300px', maxHeight: '80vh'}}>
-        <Card.Header as="h5" className="card-header-sticky">Inbox</Card.Header>
+        <Card.Header as="h5" className="card-header-sticky">SentBox</Card.Header>
         <Card.Body style={{overflowY: 'auto' }}>
           <Table responsive="sm" className="table" >
             <thead className="thead-sticky">
               <tr>
-                <th scope="col">NO</th>
+                <th scope="col">NO</th> 
                 <th scope="col">Subject</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
@@ -56,4 +54,4 @@ const Inbox = () => {
   );
 };
 
-export default Inbox;
+export default Sent;

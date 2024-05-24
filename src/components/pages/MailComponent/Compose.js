@@ -42,7 +42,7 @@ const Compose = () => {
             subject: subject,
             message: messageState,
             senderEmail: senderMail,
-            timestamp: new Date().toISOString()
+            timestamp: Date.now()
         }
         
         console.log(messgeData)

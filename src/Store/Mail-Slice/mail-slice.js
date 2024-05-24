@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialMailState = {
   sentMail: [],
-  receivedMail: {}
+  receivedMail: []
 };
 
 const MailSlice = createSlice({
@@ -40,7 +40,7 @@ export const sendRequestToMail = (mailData) => {
     senderEmail = senderEmail.replace(/[@.""]/g, "");
   }
 
-  const receiverEmail = mailData.to.replace(/[@.""]/g, "");
+  let receiverEmail = mailData.to.replace(/[@.""]/g, "");
   console.log('receiverEmail', receiverEmail);
   console.log('senderEmail', senderEmail);
 
@@ -113,3 +113,39 @@ export const getSentMails = () => {
     }
   };
 };
+
+export const receivedMailsGet =()=>{
+  let receiverEmail = localStorage.getItem('email');
+
+  if (receiverEmail) {
+    receiverEmail = receiverEmail.replace(/[@.""]/g, "");
+  }
+  console.log('received mail', receiverEmail)
+  return async(dispatch)=>{
+    try {
+      const receiverResponse = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${receiverEmail}/received.json`)
+
+      const receivedData = await receiverResponse.json()
+
+      let loadedData = [];
+
+      for (const key in receivedData) {
+        loadedData.push({
+          id: key,
+          to: receivedData[key].to,
+          message: receivedData[key].message,
+          senderEmail: receivedData[key].senderEmail,
+          subject: receivedData[key].subject,
+          timeStamp: receivedData[key].timestamp,
+        });
+      }
+      dispatch(mailActions.setReceivedMails(loadedData))
+      console.log(loadedData)
+
+    
+    } catch (error) {
+      
+    }
+  }
+  
+}
