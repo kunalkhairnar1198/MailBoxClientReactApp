@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialMailState = {
-  sentMail: {},
+  sentMail: [],
   receivedMail: {}
 };
 
@@ -10,10 +10,22 @@ const MailSlice = createSlice({
   initialState: initialMailState,
   reducers: {
     addSentMail(state, action) {
-      const newMail = action.payload;
-      state.sentMail[newMail.id] = newMail;
-      console.log(action)
+      state.sentMail.push(action.payload);
+      console.log(state.sentMail);
+    },
+    setSentMails(state, action) {
+      state.sentMail = action.payload;
+      console.log(state.sentMail);
+    },
+    addReceivedMail(state, action) {
+      state.receivedMail.push(action.payload);
+      console.log(state.receivedMail);
+    },
+    setReceivedMails(state, action) {
+      state.receivedMail = action.payload;
+      console.log(state.receivedMail);
     }
+    
   }
 });
 
@@ -21,17 +33,20 @@ export const mailActions = MailSlice.actions;
 export default MailSlice.reducer;
 
 
-
 export const sendRequestToMail = (mailData) => {
-  let email = localStorage.getItem('email')
+  let senderEmail = localStorage.getItem('email');
 
-  if(email){
-    email = email.replace(/[@.""]/g, "");
+  if (senderEmail) {
+    senderEmail = senderEmail.replace(/[@.""]/g, "");
   }
-  console.log(email)
+
+  const receiverEmail = mailData.to.replace(/[@.""]/g, "");
+  console.log('receiverEmail', receiverEmail);
+  console.log('senderEmail', senderEmail);
+
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/${email}/email.json`, {
+      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${senderEmail}/sent.json`, {
         method: 'POST',
         body: JSON.stringify(mailData)
       });
@@ -40,30 +55,59 @@ export const sendRequestToMail = (mailData) => {
         throw new Error('Failed to send mail.');
       }
 
-      const data = await response.json();
-      const mailWithId = { ...mailData, id: data.name }; 
-      dispatch(mailActions.addSentMail(mailWithId));
+      const senderData = await response.json();
+      dispatch(mailActions.addSentMail({ id: senderData.name, ...mailData }));
 
-      console.log(data);
+      console.log('senderData', senderData);
+
+      const receiverResponse = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${receiverEmail}/received.json`, {
+        method: 'POST',
+        body: JSON.stringify(mailData)
+      });
+
+      if (!receiverResponse.ok) {
+        throw new Error('Failed to receive mail!');
+      }
+
+      const receiverData = await receiverResponse.json();
+      dispatch(mailActions.addReceivedMail({ id: receiverData.name, ...mailData }));
+
+      console.log('receiverData', receiverData);
+
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export const getMails = () => {
-  let email = localStorage.getItem('email')
+export const getSentMails = () => {
+  let senderEmail = localStorage.getItem('email');
 
-  if(email){
-    email = email.replace(/[@.""]/g, "");
+  if (senderEmail) {
+    senderEmail = senderEmail.replace(/[@.""]/g, "");
   }
-  console.log(email)
+  console.log(senderEmail);
+
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/${email}/email.json`)
+      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${senderEmail}/sent.json`);
       const data = await response.json();
+      let loadedData = [];
+
+      for (const key in data) {
+        loadedData.push({
+          id: key,
+          to: data[key].to,
+          message: data[key].message,
+          senderEmail: data[key].senderEmail,
+          subject: data[key].subject,
+          timeStamp: data[key].timestamp,
+        });
+      }
+      dispatch(mailActions.setSentMails(loadedData));
+      console.log(loadedData);
       console.log(data);
-      dispatch(mailActions.addSentMail(data))
+
     } catch (error) {
       console.log(error);
     }

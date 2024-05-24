@@ -1,36 +1,53 @@
 import React, { useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
-import { getMails } from '../../../../Store/Mail-Slice/mail-slice';
-import {useDispatch, useSelector} from 'react-redux'
+import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice';
+import {useDispatch, useSelector} from 'react-redux';
+import { format } from 'date-fns'; 
+
+
+
 const Inbox = () => {
   const dispatch = useDispatch()
   const mails = useSelector(state => state.mail.sentMail)
   console.log(mails)
-  useEffect(()=>{
-    dispatch(getMails())
-  },[])
 
+  useEffect(()=>{
+    dispatch(getSentMails())
+  },[dispatch])
+
+  const formatDate = (timestamp) => {
+    return format(new Date(timestamp), 'MMMdd'); 
+  };
+
+  const mapData = mails.map((item, index)=>(
+      <tr key={item.id}>
+        <th scope="row">{index + 1}</th>
+        <td>{item.subject}</td>
+        <td>{item.senderEmail}</td>
+        <td>{item.to}</td>
+        <td>
+        <time dateTime={item.timeStamp}>{formatDate(item.timeStamp)}</time>
+        </td>
+      </tr>
+  ));
+  
   return (
-    <Container className="mt-5">
-      <Card className="mx-auto" style={{ maxWidth: '100%',height:'35rem', minWidth: '300px' }}>
-        <Card.Header as="h5">Inbox</Card.Header>
-        <Card.Body>
-          <Table responsive="sm" className="table">
-            <thead>
+    <Container className="mt-4">
+      <Card className="mx-auto" style={{ maxWidth: '150%', minWidth: '300px', maxHeight: '80vh'}}>
+        <Card.Header as="h5" className="card-header-sticky">Inbox</Card.Header>
+        <Card.Body style={{overflowY: 'auto' }}>
+          <Table responsive="sm" className="table" >
+            <thead className="thead-sticky">
               <tr>
-                {/* <th scope="col">NO</th> */}
+                <th scope="col">NO</th>
                 <th scope="col">Subject</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>
+                <th scope="col">Time</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                {/* <th scope="row">1</th> */}
-                <td>dfsdffdds</td>
-                <td>kunal@gmail.com</td>
-                <td>ram@gmail.com</td>
-              </tr>
+              {mapData}
             </tbody>
           </Table>
         </Card.Body>

@@ -5,6 +5,9 @@ import  {NavLink}  from 'react-router-dom'
 import './SideNav.css';
 import { useDispatch } from 'react-redux';
 import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
+import { BrowserRouter, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import Compose from '../pages/MailComponent/Compose';
+import Inbox from '../pages/MailComponent/Inbox/Inbox';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
@@ -13,6 +16,7 @@ const SideNav = ({show, onHide}) => {
         dispatch(LoaderActions.openPortal())
     }
   return (
+    <BrowserRouter>
     <Container fluid className={`main-container ${show ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Row>
         <Col xs={2} className="p-0">
@@ -29,14 +33,12 @@ const SideNav = ({show, onHide}) => {
           </Offcanvas>
         </Col>
         <Col xs={10} className="content-col">
-          {/* <Button variant="outline-primary" onClick={onHide}>
-            Click here to toggle the sidebar
-          </Button> */}
-          
-          {/* <p>Content that is pushed to the right when sidebar is open.</p> */}
+            <Route  path='/compose' component={Compose} />
+            <Route path='/inbox' component={Inbox}/>
         </Col>
       </Row>
     </Container>
+    </BrowserRouter>
   );
 };
 

@@ -38,12 +38,13 @@ const Compose = () => {
         console.log(tomailid, subject, messageState)
         
         const messgeData = {
-            tomailid,
-            subject,
+            to : tomailid,
+            subject: subject,
             message: messageState,
             senderEmail: senderMail,
             timestamp: new Date().toISOString()
         }
+        
         console.log(messgeData)
         dispatch(sendRequestToMail(messgeData))
 
