@@ -5,19 +5,19 @@ import  {NavLink}  from 'react-router-dom'
 import './SideNav.css';
 import { useDispatch } from 'react-redux';
 import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
-import { BrowserRouter, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route, Switch, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import Compose from '../pages/MailComponent/Compose';
 import Inbox from '../pages/MailComponent/Inbox/Inbox';
 import Sent from '../pages/MailComponent/SendBox/Sent';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
+    const {url,path} = useRouteMatch()
 
     const openModalhandler=()=>{
         dispatch(LoaderActions.openPortal())
     }
   return (
-    <BrowserRouter>
     <Container fluid className={`main-container ${show ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Row>
         <Col xs={2} className="p-0">
@@ -26,21 +26,22 @@ const SideNav = ({show, onHide}) => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="flex-column">
-                <Nav.Link as={NavLink} to="/compose" onClick={openModalhandler} >Compose</Nav.Link>
-                <Nav.Link as={NavLink} to='/inbox'>Inbox</Nav.Link>
-                <Nav.Link as={NavLink} to='./sent'>Sent</Nav.Link>
+                <Nav.Link as={NavLink} to={`${url}/compose`} onClick={openModalhandler} >Compose</Nav.Link>
+                <Nav.Link as={NavLink} to={`${url}/inbox`}>Inbox</Nav.Link>
+                <Nav.Link as={NavLink} to={`${url}/sent`} >Sent</Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Offcanvas>
         </Col>
         <Col xs={10} className="content-col">
-            <Route  path='/compose' component={Compose} />
-            <Route path='/inbox' component={Inbox}/>
-            <Route path='/sent' component={Sent}/>
+          <Switch>
+            <Route path={`${path}/compose`} component={Compose} />
+            <Route path={`${path}/inbox`} component={Inbox}/>
+            <Route path={`${path}/sent`} component={Sent}/>
+          </Switch>
         </Col>
       </Row>
     </Container>
-    </BrowserRouter>
   );
 };
 

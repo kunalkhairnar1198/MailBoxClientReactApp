@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
 import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice';
 import {useDispatch, useSelector} from 'react-redux';
-import { format } from 'date-fns'; 
 
 const Sent = () => {
   const dispatch = useDispatch()
@@ -13,18 +12,17 @@ const Sent = () => {
     dispatch(getSentMails())
   },[dispatch])
 
-  const formatDate = (timestamp) => {
-    return format(new Date(timestamp), 'MMMdd'); 
-  };
 
   const mapData = mails.map((item, index)=>(
       <tr key={item.id}>
-        <th scope="row">{index + 1}</th>
+        <th scope="row">
+            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>    
+        </th>
         <td>{item.subject}</td>
         <td>{item.senderEmail}</td>
         <td>{item.to}</td>
         <td>
-        <time dateTime={item.timeStamp}>{formatDate(item.timeStamp)}</time>
+        {new Date(item.timeStamp).toLocaleString('en-US', { month: 'short', day: 'numeric' })}
         </td>
       </tr>
   ));
@@ -34,10 +32,12 @@ const Sent = () => {
       <Card className="mx-auto" style={{ maxWidth: '150%', minWidth: '300px', maxHeight: '80vh'}}>
         <Card.Header as="h5" className="card-header-sticky">SentBox</Card.Header>
         <Card.Body style={{overflowY: 'auto' }}>
-          <Table responsive="sm" className="table" >
+          <Table responsive="sm" className="table table-hover" >
             <thead className="thead-sticky">
               <tr>
-                <th scope="col">NO</th> 
+                <th scope="col">
+                     <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>    
+                </th> 
                 <th scope="col">Subject</th>
                 <th scope="col">From</th>
                 <th scope="col">To</th>

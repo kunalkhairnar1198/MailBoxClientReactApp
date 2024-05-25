@@ -6,11 +6,13 @@ import './Compose.css';
 import {useDispatch, useSelector} from 'react-redux'
 import { sendRequestToMail } from '../../../Store/Mail-Slice/mail-slice';
 import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import Loader from '../../UI/Loader';
 
 const Compose = () => {
     console.log('modal')
     const show = useSelector(state => state.loader.isOpen)
+    const isLoading = useSelector(state => state.loader.isVisible)
     console.log(show)
     // const [show, setShow] = useState(false);
     const emailRef = useRef()
@@ -27,10 +29,10 @@ const Compose = () => {
     
     const closeModalportal =()=>{
         dispatch(LoaderActions.openPortal())
-        navigate.replace('/mainnavigation')
+        navigate.replace('/mainnavigation/sent')
     }
     
-    const sendEmailHandler = (e) =>{
+    const sendEmailHandler = async(e) =>{
         e.preventDefault()
         const tomailid =  emailRef.current.value;
         const subject = subjectRef.current.value;
@@ -44,10 +46,22 @@ const Compose = () => {
             senderEmail: senderMail,
             timestamp: Date.now()
         }
-        
-        console.log(messgeData)
-        dispatch(sendRequestToMail(messgeData))
+        dispatch(LoaderActions.isLoadingData())
 
+        try {
+            await dispatch(sendRequestToMail(messgeData))
+
+        } catch (error) {
+            
+        }finally{
+            await dispatch(LoaderActions.stopIsloading())
+            await navigate.push('/mainnavigation/sent')
+        }
+        console.log(messgeData)
+
+        emailRef.current.value =''
+        subjectRef.current.value =''
+        setEditorState(EditorState.createEmpty())
     }
     
   return (
@@ -60,9 +74,10 @@ const Compose = () => {
                 >
              <Modal.Header style={{height:'3rem', position:'relative'}} closeButton>
                 <Modal.Title id="example-custom-modal-styling-title">
-                    New Message
+                    {isLoading ?  'Suceesfully message Sent' : "New Message" }
                 </Modal.Title>
                 </Modal.Header>
+                    {isLoading && <Loader/>}
                 <Form>
                 <Modal.Body>
                    
