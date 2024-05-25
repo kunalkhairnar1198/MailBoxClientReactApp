@@ -6,7 +6,7 @@ import './Compose.css';
 import {useDispatch, useSelector} from 'react-redux'
 import { sendRequestToMail } from '../../../Store/Mail-Slice/mail-slice';
 import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
-import { useHistory, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../UI/Loader';
 
 const Compose = () => {

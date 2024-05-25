@@ -9,6 +9,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom/cjs/react-router-
 import Compose from '../pages/MailComponent/Compose';
 import Inbox from '../pages/MailComponent/Inbox/Inbox';
 import Sent from '../pages/MailComponent/SendBox/Sent';
+import SentMsgDetail from '../pages/MailComponent/SendBox/SentMsgDetail';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
@@ -37,9 +38,10 @@ const SideNav = ({show, onHide}) => {
           <Switch>
             <Route path={`${path}/compose`} component={Compose} />
             <Route path={`${path}/inbox`} component={Inbox}/>
-            <Route path={`${path}/sent`} component={Sent}/>
+            <Route exact path={`${path}/sent`} component={Sent}/>
+            <Route path={`${path}/sent/:sentId`} component={SentMsgDetail}/>
           </Switch>
-        </Col>
+        </Col>  
       </Row>
     </Container>
   );

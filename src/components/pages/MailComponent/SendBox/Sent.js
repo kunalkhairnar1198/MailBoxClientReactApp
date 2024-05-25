@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react';
-import { Card, Table, Container } from 'react-bootstrap';
+import { Card, Table, Container, NavLink } from 'react-bootstrap';
 import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice';
 import {useDispatch, useSelector} from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Sent = () => {
   const dispatch = useDispatch()
   const mails = useSelector(state => state.mail.sentMail)
+  const location = useLocation()
+  const history = useHistory()
   console.log(mails)
 
   useEffect(()=>{
     dispatch(getSentMails())
   },[dispatch])
 
+  const NavigateDetailPage =(sentId)=>{
+    console.log(sentId)
+    history.push(`${location.pathname}/${sentId}`);
+  }
 
   const mapData = mails.map((item, index)=>(
-      <tr key={item.id}>
+      <tr key={item.id} onClick={()=>NavigateDetailPage(item.id)}>
         <th scope="row">
             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>    
         </th>
