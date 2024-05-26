@@ -1,9 +1,8 @@
 import React from 'react';
-import { Col, Container, Nav, Offcanvas, Row } from 'react-bootstrap';
+import { Badge, Col, Container, Nav, Offcanvas, Row } from 'react-bootstrap';
 import  {NavLink}  from 'react-router-dom'
-
 import './SideNav.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
 import { Route, Switch, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import Compose from '../pages/MailComponent/Compose';
@@ -14,11 +13,14 @@ import InboxMsgDetail from '../pages/MailComponent/Inbox/InboxMsgDetail';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
+    const unReadMessages = useSelector(state => state.mail.unReadMessages)
     const {url,path} = useRouteMatch()
+
 
     const openModalhandler=()=>{
         dispatch(LoaderActions.openPortal())
     }
+    
   return (
     <Container fluid className={`main-container ${show ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Row>
@@ -29,8 +31,12 @@ const SideNav = ({show, onHide}) => {
             <Offcanvas.Body>
               <Nav className="flex-column">
                 <Nav.Link as={NavLink} to={`${url}/compose`} onClick={openModalhandler} >Compose</Nav.Link>
-                <Nav.Link as={NavLink} to={`${url}/inbox`}>Inbox</Nav.Link>
-                <span>0</span>
+                <Nav.Link as={NavLink} to={`${url}/inbox`}>
+                            Inbox 
+                            <Badge bg="info" text="dark" style={{marginLeft:'5px', alignContent:'center'}}>
+                              {unReadMessages}
+                            </Badge>
+                </Nav.Link>
                 <Nav.Link as={NavLink} to={`${url}/sent`} >Sent</Nav.Link>
               </Nav>
             </Offcanvas.Body>

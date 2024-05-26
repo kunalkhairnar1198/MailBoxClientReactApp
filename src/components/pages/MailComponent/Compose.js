@@ -44,7 +44,8 @@ const Compose = () => {
             subject: subject,
             message: messageState,
             senderEmail: senderMail,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            isRead:false
         }
         dispatch(LoaderActions.isLoadingData())
 

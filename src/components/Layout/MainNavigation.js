@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Navbar, Button } from 'react-bootstrap';
-import SideNav from './SideNav'; // Assuming SideNav component is located in the same directory
-
+import SideNav from './SideNav'; 
 const MainNavigation = () => {
-  const [showSideNav, setShowSideNav] = useState(true);
+  const [showSideNav, setShowSideNav] = useState(false);
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);

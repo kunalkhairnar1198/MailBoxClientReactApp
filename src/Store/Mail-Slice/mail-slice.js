@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialMailState = {
   sentMail: [],
-  receivedMail: []
+  receivedMail: [],
+  unReadMessages:0
 };
 
 const MailSlice = createSlice({
@@ -11,20 +12,31 @@ const MailSlice = createSlice({
   reducers: {
     addSentMail(state, action) {
       state.sentMail.push(action.payload);
-      console.log(state.sentMail);
+      // console.log(state.sentMail);
     },
     setSentMails(state, action) {
       state.sentMail = action.payload;
-      console.log(state.sentMail);
+      // console.log(state.sentMail);
     },
     addReceivedMail(state, action) {
       state.receivedMail.push(action.payload);
-      console.log(state.receivedMail);
+      // console.log(state.receivedMail);
     },
     setReceivedMails(state, action) {
       state.receivedMail = action.payload;
-      console.log(state.receivedMail);
-    }
+      const ureadMessages = state.receivedMail.filter(mail => mail.isRead !== false)
+      state.unReadMessages = ureadMessages.length;
+      //  console.log(state.unReadMessages)
+      // console.log(state.receivedMail);
+    },
+    markAsRead(state, action){
+      const mail = state.receivedMail.find(mail => mail.id === action.payload);
+     
+      if (mail) {
+        mail.isRead = true;
+      }
+    },
+
     
   }
 });
@@ -102,6 +114,7 @@ export const getSentMails = () => {
           senderEmail: data[key].senderEmail,
           subject: data[key].subject,
           timeStamp: data[key].timestamp,
+          isRead : data[key].isRead
         });
       }
       dispatch(mailActions.setSentMails(loadedData));
@@ -137,6 +150,7 @@ export const receivedMailsGet =()=>{
           senderEmail: receivedData[key].senderEmail,
           subject: receivedData[key].subject,
           timeStamp: receivedData[key].timestamp,
+          isRead : receivedData[key].isRead
         });
       }
       dispatch(mailActions.setReceivedMails(loadedData))
@@ -147,5 +161,33 @@ export const receivedMailsGet =()=>{
       
     }
   }
-  
+}
+
+export const markReadMail =(mailId)=>{
+  let email = localStorage.getItem('email');
+
+  if (email) {
+    email = email.replace(/[@.""]/g, "");
+  }
+  console.log('received mail', email)
+  return async(dispatch)=>{
+    try {
+      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${email}/received/${mailId}.json`, {
+        method: 'PATCH',
+        body: JSON.stringify({ isRead: true }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json()
+      console.log(data)
+      if (!response.ok) {
+        throw new Error('Failed to mark mail as read.');
+      }
+      dispatch(mailActions.markAsRead(mailId));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
