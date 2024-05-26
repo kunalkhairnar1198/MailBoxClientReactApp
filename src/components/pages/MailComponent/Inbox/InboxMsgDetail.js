@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react'
-import {  Card, Col, Nav, Row } from 'react-bootstrap'
+import { Card, Col, Nav, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice'
+import { receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice'
 
-const SentMsgDetail = () => {
-const params = useParams()
-const sentMessageDetail = useSelector(state => state.mail.sentMail)
-const dispatch = useDispatch()
-console.log(sentMessageDetail)
-console.log(params.sentId)
+const InboxMsgDetail = () => {
+  const params = useParams()
+  const receivedMsgDetails =  useSelector(state => state.mail.receivedMail)
+  const dispatch = useDispatch()
+  console.log(receivedMsgDetails)
 
-useEffect(()=>{
-    dispatch(getSentMails())
-},[params])
+  useEffect(()=>{
+      dispatch(receivedMailsGet())
+  },[dispatch])
 
- const data = sentMessageDetail.find(item => item.id === params.sentId)
- console.log(data)   
+  const receivedData = receivedMsgDetails.find(item => item.id === params.inboxId)
 
   return (
     <Card className="w-100 max-w-2xl shadow-sm mt-4">
       <Card.Header as="h6" className="card-header-sticky">Message Box</Card.Header>
       <Card.Body className="p-4">
       
-        <div className="h5 mt-2 mb-4">{data.subject}</div>
+        <div className="h5 mt-2 mb-4">{receivedData.subject}</div>
       
           <Row className="align-items-start gap-0">
             <Col xs="auto">
@@ -33,19 +31,19 @@ useEffect(()=>{
             </Col>
             <Col>
               <div className="d-flex justify-content-between align-items-center">
-                <div className="font-weight-medium">{data.to}</div>
-                <div className="text-muted small">{new Date(data.timeStamp).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}</div>
+                <div className="font-weight-medium">{receivedData.senderEmail}</div>
+                <div className="text-muted small">{new Date(receivedData.timeStamp).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}</div>
               </div>
-              <div className="text-muted small">{data.senderEmail}</div>
+              <div className="text-muted small">{receivedData.to}</div>
             </Col>
           </Row>
         <Card.Text className="mt-4">
             <p>
-               {data.message}
+               {receivedData.message}
             </p>
         </Card.Text>
         <div className="d-flex justify-content-between gap-2 mt-4">
-            <Nav activeKey="/home" onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}>
+            <Nav>
               <Nav.Item>
                 <Nav.Link href="">Reply</Nav.Link>
               </Nav.Item>
@@ -65,4 +63,4 @@ useEffect(()=>{
   )
 }
 
-export default SentMsgDetail;
+export default InboxMsgDetail

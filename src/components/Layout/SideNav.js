@@ -10,6 +10,7 @@ import Compose from '../pages/MailComponent/Compose';
 import Inbox from '../pages/MailComponent/Inbox/Inbox';
 import Sent from '../pages/MailComponent/SendBox/Sent';
 import SentMsgDetail from '../pages/MailComponent/SendBox/SentMsgDetail';
+import InboxMsgDetail from '../pages/MailComponent/Inbox/InboxMsgDetail';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()
@@ -29,6 +30,7 @@ const SideNav = ({show, onHide}) => {
               <Nav className="flex-column">
                 <Nav.Link as={NavLink} to={`${url}/compose`} onClick={openModalhandler} >Compose</Nav.Link>
                 <Nav.Link as={NavLink} to={`${url}/inbox`}>Inbox</Nav.Link>
+                <span>0</span>
                 <Nav.Link as={NavLink} to={`${url}/sent`} >Sent</Nav.Link>
               </Nav>
             </Offcanvas.Body>
@@ -37,7 +39,8 @@ const SideNav = ({show, onHide}) => {
         <Col xs={10} className="content-col">
           <Switch>
             <Route path={`${path}/compose`} component={Compose} />
-            <Route path={`${path}/inbox`} component={Inbox}/>
+            <Route exact path={`${path}/inbox`} component={Inbox}/>
+            <Route  path={`${path}/inbox/:inboxId`} component={InboxMsgDetail}/>
             <Route exact path={`${path}/sent`} component={Sent}/>
             <Route path={`${path}/sent/:sentId`} component={SentMsgDetail}/>
           </Switch>

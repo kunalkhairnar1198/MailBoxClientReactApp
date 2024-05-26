@@ -2,21 +2,28 @@ import React, { useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
 import { receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice';
 import {useDispatch, useSelector} from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Inbox = () => {
   const dispatch = useDispatch()
   const receivedMails = useSelector(state => state.mail.receivedMail)
+  const location = useLocation()
+  const history = useHistory()
   console.log(receivedMails)
 
   useEffect(()=>{
     dispatch(receivedMailsGet())
   },[dispatch])
+
+  const NavigateInboxDetailPage =(inboxId)=>{
+      history.push(`${location.pathname}/${inboxId}`)
+  }
   
 
   const mapData = receivedMails.map((item, index)=>(
-      <tr key={item.id}>
+      <tr key={item.id} onClick={()=>NavigateInboxDetailPage(item.id)}>
         <th scope="row">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/> 
+          <input className="form-check-input" type="checkbox" value="" id={index + 1 }/> 
         </th>
         <td>{item.subject}</td>
         <td>{item.senderEmail}</td>
@@ -36,7 +43,7 @@ const Inbox = () => {
             <thead className="thead-sticky">
               <tr>
                 <th scope="col">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/> 
+                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/> 
                 </th>
                 <th scope="col">Subject</th>
                 <th scope="col">From</th>

@@ -117,8 +117,8 @@ const Compose = () => {
                             <div  className='singline'></div>
                         </div>
                     </Row> 
-                    <div className="d-flex flex-column email-editor-container">
-                        <Row className="flex-grow-1">
+                    <div className="d-flex flex-column email-editor-container" style={{overflowY:'hidden' }}>
+                        <Row className="flex-grow-1" >
                             <Col className="mt-1 editor-col">
                             <Editor
                                         editorState={eidtorState}
