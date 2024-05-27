@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { Container, Navbar, Button, Nav, NavLink } from 'react-bootstrap';
 import SideNav from './SideNav'; 
+import { AuthActions } from '../../Store/Auth-Slice/auth-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 const MainNavigation = () => {
   const [showSideNav, setShowSideNav] = useState(false);
+  const isAuthentication = useSelector(state => state.auth.isAuthenticated)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
   };
+  
   const logoutHandler =()=>{
-
+      dispatch(AuthActions.logoutHandler())
+      history.replace('/')
+      // console.log('LOGOUT')
   }
 
   return (
@@ -18,13 +28,12 @@ const MainNavigation = () => {
             &#9776;
           </Button>
           <Container>
-          <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>
-          <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
+          {isAuthentication && <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>}
+            <Nav className="justify-content-end">
               <Navbar.Text>
                 <Nav.Link as={NavLink} onClick={logoutHandler}>SignOut</Nav.Link>
               </Navbar.Text>
-            </Navbar.Collapse>
+            </Nav>
         </Container>
       </Navbar>
       <Container fluid>

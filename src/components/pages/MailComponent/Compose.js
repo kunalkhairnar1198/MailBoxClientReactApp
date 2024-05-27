@@ -29,7 +29,7 @@ const Compose = () => {
     
     const closeModalportal =()=>{
         dispatch(LoaderActions.openPortal())
-        navigate.replace('/mainnavigation/sent')
+        navigate.replace('/mainnavigation/inbox')
     }
     
     const sendEmailHandler = async(e) =>{
