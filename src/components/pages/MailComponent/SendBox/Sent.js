@@ -9,7 +9,7 @@ const Sent = () => {
   const mails = useSelector(state => state.mail.sentMail)
   const location = useLocation()
   const history = useHistory()
-  console.log(mails)
+  console.log('sending mails check on the mail component',mails)
 
   useEffect(()=>{
     dispatch(getSentMails())
