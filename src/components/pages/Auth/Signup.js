@@ -69,7 +69,7 @@ const Signup = () => {
                 dispatch(LoaderActions.stopIsloading())
                 dispatch(AuthActions.loginHandler(data.idToken))
                 localStorage.setItem('email', data.email)
-                history.replace('/mainnavigation')
+                history.replace('/mainnavigation/inbox')
 
             }else{
                 const errorData = await response.json()

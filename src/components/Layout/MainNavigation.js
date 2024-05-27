@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Button } from 'react-bootstrap';
+import { Container, Navbar, Button, Nav, NavLink } from 'react-bootstrap';
 import SideNav from './SideNav'; 
 const MainNavigation = () => {
   const [showSideNav, setShowSideNav] = useState(false);
@@ -7,6 +7,9 @@ const MainNavigation = () => {
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
   };
+  const logoutHandler =()=>{
+
+  }
 
   return (
     <>
@@ -14,8 +17,14 @@ const MainNavigation = () => {
           <Button className='bg-black' onClick={toggleSideNav} style={{ fontSize: '30px', border:'none' }}>
             &#9776;
           </Button>
-        <Container>
+          <Container>
           <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>
+          <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                <Nav.Link as={NavLink} onClick={logoutHandler}>SignOut</Nav.Link>
+              </Navbar.Text>
+            </Navbar.Collapse>
         </Container>
       </Navbar>
       <Container fluid>

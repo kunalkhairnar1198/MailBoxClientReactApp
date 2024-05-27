@@ -34,7 +34,7 @@ const SideNav = ({show, onHide}) => {
                 <Nav.Link as={NavLink} to={`${url}/inbox`}>
                             Inbox 
                             <Badge bg="info" text="dark" style={{marginLeft:'5px', alignContent:'center'}}>
-                              {unReadMessages}
+                             {unReadMessages > 0 && `unread ${unReadMessages}`}
                             </Badge>
                 </Nav.Link>
                 <Nav.Link as={NavLink} to={`${url}/sent`} >Sent</Nav.Link>

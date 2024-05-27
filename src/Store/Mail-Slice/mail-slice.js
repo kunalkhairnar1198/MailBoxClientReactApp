@@ -24,7 +24,7 @@ const MailSlice = createSlice({
     },
     setReceivedMails(state, action) {
       state.receivedMail = action.payload;
-      const ureadMessages = state.receivedMail.filter(mail => mail.isRead !== false)
+      const ureadMessages = state.receivedMail.filter(mail => mail.isRead === false)
       state.unReadMessages = ureadMessages.length;
       //  console.log(state.unReadMessages)
       // console.log(state.receivedMail);
@@ -36,6 +36,10 @@ const MailSlice = createSlice({
         mail.isRead = true;
       }
     },
+    deleteHandler(state, action) {
+      state.receivedMail = state.receivedMail.filter(mail => mail.id !== action.payload);
+      console.log(action)
+    }
 
     
   }
@@ -158,7 +162,7 @@ export const receivedMailsGet =()=>{
 
     
     } catch (error) {
-      
+        console.log(error)
     }
   }
 }
@@ -189,5 +193,28 @@ export const markReadMail =(mailId)=>{
     } catch (error) {
       console.error(error);
     }
+  }
+}
+
+export const DeleteHandler =(id)=>{
+  let email = localStorage.getItem('email');
+
+  if (email) {
+    email = email.replace(/[@.""]/g, "");
+  }
+  console.log(id)
+  return async(dispatch)=>{
+    try {
+      const response = await fetch(`https://mailbox-client-app-713c1-default-rtdb.firebaseio.com/emails/${email}/received/${id}.json`,{
+        method:'DELETE'
+      })
+      const data = await response.json()
+      console.log(data)
+      dispatch(mailActions.deleteHandler(id))
+   
+    } catch (error) {
+      console.log(error)
+    }  
+   
   }
 }
