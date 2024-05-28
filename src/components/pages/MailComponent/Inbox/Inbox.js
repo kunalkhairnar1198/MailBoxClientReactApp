@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import Dot from '../../../UI/Dot';
 import useFetchInbox from '../../../Hooks/useFetchInbox';
+import TableLoader from '../../../UI/TableLoader';
 
 const Inbox = () => {
   const dispatch = useDispatch()
-  const receivedMails = useFetchInbox()
+  const {receivedMails, isLoading} = useFetchInbox()
   const location = useLocation()
   const history = useHistory()
-  console.log(receivedMails)
+  console.log(receivedMails,isLoading)
 
   const NavigateInboxDetailPage =(inboxId)=>{
       dispatch(markReadMail(inboxId))
@@ -52,6 +53,7 @@ const Inbox = () => {
       <Card className="mx-auto" style={{ maxWidth: '150%', minWidth: '300px', maxHeight: '80vh'}}>
         <Card.Header as="h5" className="card-header-sticky">Inbox</Card.Header>
         <Card.Body style={{overflowY: 'auto' }}>
+          {isLoading && <TableLoader/>}
           <Table responsive="sm" className="table table-hover" >
             <thead className="thead-sticky">
               <tr>
@@ -66,7 +68,7 @@ const Inbox = () => {
               </tr>
             </thead>
             <tbody>
-              {mapData}
+              {!isLoading && mapData}
             </tbody>
           </Table>
         </Card.Body>

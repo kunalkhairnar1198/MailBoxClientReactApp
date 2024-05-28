@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { receivedMailsGet } from '../../Store/Mail-Slice/mail-slice'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
 import { LoaderActions } from '../../Store/UI-Slice/loader-slice'
+import { getSentMails } from '../../Store/Mail-Slice/mail-slice'
 
-const useFetchInbox = () => {
+const useFetchSentbox = () => {
+    const mails = useSelector(state => state.mail.sentMail)
+    const isLoading = useSelector(state => state.loader.isVisible); 
     const dispatch = useDispatch()
-    const receivedMails = useSelector(state => state.mail.receivedMail)
-    const isLoading = useSelector(state => state.loader.isVisible);
     const location = useLocation()
 
     useEffect(()=>{
         const fetchData = async () => {
             dispatch(LoaderActions.isLoadingData());
-            await dispatch(receivedMailsGet());
+            await dispatch(getSentMails());
             dispatch(LoaderActions.stopIsloading());
           };
       
           fetchData();
-    },[dispatch, location])
-
-    return {receivedMails, isLoading}
+    },[dispatch,location])
+    
+  return {mails, isLoading}
 }
 
-export default useFetchInbox
+export default useFetchSentbox
