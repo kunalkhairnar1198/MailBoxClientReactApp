@@ -14,7 +14,6 @@ const Compose = () => {
     const show = useSelector(state => state.loader.isOpen)
     const isLoading = useSelector(state => state.loader.isVisible)
     console.log(show)
-    // const [show, setShow] = useState(false);
     const emailRef = useRef()
     const subjectRef = useRef()
     const [eidtorState, setEditorState] = useState(EditorState.createEmpty())   
@@ -30,7 +29,6 @@ const Compose = () => {
     const closeModalportal =()=>{
         dispatch(LoaderActions.openPortal())
         navigate.replace('/mainnavigation/inbox')
-       
     }
     
     const sendEmailHandler = async(e) =>{

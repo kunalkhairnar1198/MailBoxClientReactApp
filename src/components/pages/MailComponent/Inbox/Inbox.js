@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
-import { DeleteHandler, markReadMail, receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice';
-import {useDispatch, useSelector} from 'react-redux';
+import { DeleteHandler, markReadMail } from '../../../../Store/Mail-Slice/mail-slice';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import Dot from '../../../UI/Dot';
+import useFetchInbox from '../../../Hooks/useFetchInbox';
 
 const Inbox = () => {
   const dispatch = useDispatch()
-  const receivedMails = useSelector(state => state.mail.receivedMail)
+  const receivedMails = useFetchInbox()
   const location = useLocation()
   const history = useHistory()
   console.log(receivedMails)
-
-  useEffect(()=>{
-    dispatch(receivedMailsGet())
-  },[dispatch])
 
   const NavigateInboxDetailPage =(inboxId)=>{
       dispatch(markReadMail(inboxId))

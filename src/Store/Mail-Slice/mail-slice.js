@@ -39,7 +39,7 @@ const MailSlice = createSlice({
     deleteHandler(state, action) {
       state.receivedMail = state.receivedMail.filter(mail => mail.id !== action.payload);
       console.log(action)
-    }
+    },
 
     
   }
