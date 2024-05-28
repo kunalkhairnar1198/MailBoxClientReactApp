@@ -4,7 +4,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from "react-draft-wysiwyg";
 import './Compose.css';
 import {useDispatch, useSelector} from 'react-redux'
-import { sendRequestToMail } from '../../../Store/Mail-Slice/mail-slice';
+import { receivedMailsGet, sendRequestToMail } from '../../../Store/Mail-Slice/mail-slice';
 import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Loader from '../../UI/Loader';
@@ -30,6 +30,7 @@ const Compose = () => {
     const closeModalportal =()=>{
         dispatch(LoaderActions.openPortal())
         navigate.replace('/mainnavigation/inbox')
+       
     }
     
     const sendEmailHandler = async(e) =>{
@@ -51,7 +52,7 @@ const Compose = () => {
 
         try {
             await dispatch(sendRequestToMail(messgeData))
-
+            await  dispatch(receivedMailsGet())
         } catch (error) {
             
         }finally{

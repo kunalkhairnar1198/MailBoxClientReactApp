@@ -18,6 +18,7 @@ const authSlice = createSlice({
         logoutHandler(state, action){
             state.token = action.payload
             localStorage.removeItem('idToken')
+            localStorage.removeItem('email')
         }
     }
 })
