@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Button, Nav, NavLink } from 'react-bootstrap';
+import { Container, Navbar, Button, Nav, NavLink, NavbarToggle } from 'react-bootstrap';
 import SideNav from './SideNav'; 
 import { AuthActions } from '../../Store/Auth-Slice/auth-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,10 +23,11 @@ const MainNavigation = () => {
 
   return (
     <>
-      <Navbar expand='lg' bg="black" variant="dark">
-          <Button className='bg-black' onClick={toggleSideNav} style={{ fontSize: '30px', border:'none' }}>
+      <Navbar expand='lg' bg="white" variant="light" className="bg-body-tertiary">
+          <Button className='bg-light' variant='dark' onClick={toggleSideNav} style={{ fontSize: '30px', border:'none', color:'black' }}>
             &#9776;
           </Button>
+          
           <Container>
           {isAuthentication && <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>}
             <Nav className="justify-content-end">

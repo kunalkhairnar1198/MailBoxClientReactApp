@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Col, Container, Nav, Offcanvas, Row } from 'react-bootstrap';
+import { Badge, Button, Col, Container, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
 import  {NavLink}  from 'react-router-dom'
 import './SideNav.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,12 +25,18 @@ const SideNav = ({show, onHide}) => {
     <Container fluid className={`main-container ${show ? 'sidebar-open' : 'sidebar-closed'}`}>
       <Row>
         <Col xs={2} className="p-0">
-          <Offcanvas show={show} onHide={onHide} className="sidebar bg-black" style={{ width: '15rem' , color:'white'}} placement="start">
-            <Offcanvas.Header closeButton>
+          <Offcanvas show={show} onHide={onHide} className="sidebar bg-body-tertiary" backdrop={false} style={{ width: '15rem' , color:'white'}} placement="start">
+            <Offcanvas.Header>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="flex-column">
-                <Nav.Link as={NavLink} to={`${url}/compose`} onClick={openModalhandler} >Compose</Nav.Link>
+              <Navbar  data-bs-theme="light">
+              <Container>
+              <Nav className="flex-column me-auto">
+                <Nav.Link as={NavLink} to={`${url}/compose`} onClick={openModalhandler} >
+                <Button variant="dark" className='w-100 rounded-5'>
+                  Compose
+                  </Button>
+                </Nav.Link>
                 <Nav.Link as={NavLink} to={`${url}/inbox`}>
                             Inbox 
                             <Badge bg="info" text="dark" style={{marginLeft:'5px', alignContent:'center'}}>
@@ -39,6 +45,8 @@ const SideNav = ({show, onHide}) => {
                 </Nav.Link>
                 <Nav.Link as={NavLink} to={`${url}/sent`} >Sent</Nav.Link>
               </Nav>
+              </Container>
+              </Navbar>
             </Offcanvas.Body>
           </Offcanvas>
         </Col>
