@@ -1,32 +1,27 @@
-import React, { useEffect } from 'react'
 import { Card, Col, Nav, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice'
+import useFetchInbox from '../../../Hooks/useFetchInbox'
+import TableLoader from '../../../UI/TableLoader'
 
 const InboxMsgDetail = () => {
   const params = useParams()
-  const receivedMsgDetails =  useSelector(state => state.mail.receivedMail)
-  const dispatch = useDispatch()
-  console.log(receivedMsgDetails)
+  const {receivedMails, isLoading} = useFetchInbox(params.inboxId)
+  console.log(receivedMails)
+  console.log(params)
+  const receivedData = receivedMails.find(item => item.id === params.inboxId)
 
-  useEffect(()=>{
-      dispatch(receivedMailsGet())
-  },[dispatch])
-
-  const receivedData = receivedMsgDetails.find(item => item.id === params.inboxId)
 
   return (
     <Card className="w-100 max-w-2xl shadow-sm mt-4">
       <Card.Header as="h6" className="card-header-sticky">Message Box</Card.Header>
+        {isLoading && <TableLoader/>}
       <Card.Body className="p-4">
-      
         <div className="h5 mt-2 mb-4">{receivedData.subject}</div>
       
           <Row className="align-items-start gap-0">
             <Col xs="auto">
-              <div className="rounded-circle border-2 bg-black d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-                K
+              <div className="rounded-circle bg-info d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px'}}>
+                ProK
               </div>
             </Col>
             <Col>
