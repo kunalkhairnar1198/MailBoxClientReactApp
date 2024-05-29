@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const MainNavigation = () => {
-  const [showSideNav, setShowSideNav] = useState(false);
+  const [showSideNav, setShowSideNav] = useState(true);
   const isAuthentication = useSelector(state => state.auth.isAuthenticated)
   const dispatch = useDispatch()
   const history = useHistory()
