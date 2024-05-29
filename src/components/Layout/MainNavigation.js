@@ -35,7 +35,7 @@ const MainNavigation = () => {
               <Navbar.Text>
                 <Nav.Link as={NavLink} onClick={logoutHandler}>
                   <Badge pill bg="info" text="dark" style={{marginRight:'5px',height:'2rem', alignContent:'center'}}>
-                  Name: {email}
+                  Mailid - {email.toUpperCase()}
                   </Badge>
                   SignOut
                 </Nav.Link>

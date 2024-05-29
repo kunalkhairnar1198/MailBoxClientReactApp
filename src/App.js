@@ -10,7 +10,7 @@ function App() {
   return (
    <>
       <Switch>
-        {isAuthentication ? (<Route exact path="/" component={Signup} />):(<Route exact path='/mainnavigation/inbox'/>)}
+        <Route exact path="/" component={Signup} />
        
         {isAuthentication ? (
           <Route path="/mainnavigation" component={MainNavigation} />

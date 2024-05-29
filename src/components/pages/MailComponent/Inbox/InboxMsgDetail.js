@@ -2,19 +2,37 @@ import { Card, Col, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import useFetchInbox from '../../../Hooks/useFetchInbox'
 import TableLoader from '../../../UI/TableLoader'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { markReadMail, receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice'
 
 const InboxMsgDetail = () => {
-  const params = useParams()
-  const {receivedMails, isLoading} = useFetchInbox(params.inboxId)
-  console.log(receivedMails)
-  console.log(params)
-  const receivedData = receivedMails.find(item => item.id === params.inboxId)
+    const { inboxId } = useParams();
+    const { sortIedtems, isLoading } = useFetchInbox();
+    const dispatch = useDispatch();
 
+    const receivedData = sortIedtems.find(item => item.id === inboxId);
+    
+    useEffect(() => {
+      console.log('USEEFFECT WORKS')  
+      if (receivedData && !receivedData.isRead) {
+            dispatch(markReadMail(inboxId));
+            dispatch(receivedMailsGet())
+        }
+    }, [receivedData, dispatch]);
+
+    if (isLoading) {
+      return <TableLoader />;
+    }
+
+    if (!receivedData) {
+        return <div>No message found.</div>;
+    }
 
   return (
     <Card className="w-100 max-w-2xl shadow-sm mt-4">
       <Card.Header as="h6" className="card-header-sticky">Message Box</Card.Header>
-        {isLoading && <TableLoader/>}
+
       <Card.Body className="p-4">
         <div className="h5 mt-2 mb-4">{receivedData.subject}</div>
       
