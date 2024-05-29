@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Button, Nav, NavLink } from 'react-bootstrap';
+import { Container, Navbar, Button, Nav, NavLink, Badge } from 'react-bootstrap';
 import SideNav from './SideNav'; 
 import { AuthActions } from '../../Store/Auth-Slice/auth-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ const MainNavigation = () => {
   const isAuthentication = useSelector(state => state.auth.isAuthenticated)
   const dispatch = useDispatch()
   const history = useHistory()
+  const email = localStorage.getItem('email')
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
@@ -32,7 +33,12 @@ const MainNavigation = () => {
           {isAuthentication && <Navbar.Brand href="/">Welcome to MailBox</Navbar.Brand>}
             <Nav className="justify-content-end">
               <Navbar.Text>
-                <Nav.Link as={NavLink} onClick={logoutHandler}>SignOut</Nav.Link>
+                <Nav.Link as={NavLink} onClick={logoutHandler}>
+                  <Badge pill bg="info" text="dark" style={{marginRight:'5px',height:'2rem', alignContent:'center'}}>
+                  Name: {email}
+                  </Badge>
+                  SignOut
+                </Nav.Link>
               </Navbar.Text>
             </Nav>
         </Container>
