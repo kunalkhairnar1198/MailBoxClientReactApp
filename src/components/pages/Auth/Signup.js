@@ -5,6 +5,7 @@ import {useDispatch, useSelector}  from 'react-redux'
 import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { AuthActions } from '../../../Store/Auth-Slice/auth-slice';
+import Forgotpass from './Forgotpass';
 
 const Signup = () => {
     
@@ -18,6 +19,10 @@ const Signup = () => {
 
     const switchHandler =()=>{
         setIsLogin(prevState => !prevState)
+    }
+
+    const forgotPassshandler =()=> {
+        history.replace('/forgotpass')
     }
 
     const SubmitHandler = async (event) => {
@@ -119,8 +124,8 @@ const Signup = () => {
                             </div>
 
                             <Nav className='mt-3'>
-                                <Nav.Link as={NavLink}  className='w-100 text-center'>
-                                   {!islogin ? 'Forgot password':''}
+                                <Nav.Link as={NavLink} onClick={forgotPassshandler} className='w-100 text-center'>
+                                   {!islogin && 'Forgot password'}
                                 </Nav.Link>
                             </Nav>
                             </Form> 
@@ -140,6 +145,7 @@ const Signup = () => {
                 </Col>
                 
             </Row>
+            {/* <Forgotpass/> */}
     </section>
     </>
   )

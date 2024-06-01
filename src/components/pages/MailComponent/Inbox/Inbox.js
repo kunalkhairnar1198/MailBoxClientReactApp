@@ -5,7 +5,6 @@ import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.m
 import Dot from '../../../UI/Dot';
 import useFetchInbox from '../../../Hooks/useFetchInbox';
 import TableLoader from '../../../UI/TableLoader';
-import { useCallback } from 'react';
 
 
 
@@ -18,12 +17,12 @@ const Inbox = () => {
 
  
 
-  const changeSortingHandler =useCallback(()=>{
-    history.push({
-      pathname:location.pathname,
-      search :`?sort=${(isSortAscending ? 'desc' : 'asc')}`
-    })
-  },[])
+  // const changeSortingHandler =(()=>{
+  //   history.push({
+  //     pathname:location.pathname,
+  //     search :`?sort=${(isSortAscending ? 'desc' : 'asc')}`
+  //   })
+  // })
   
   const NavigateInboxDetailPage =(inboxId)=>{
       dispatch(markReadMail(inboxId))
@@ -65,7 +64,7 @@ const Inbox = () => {
   
   return (
     <Container className="mt-4">
-      <Button className='btn btn-dark mb-2' onClick={changeSortingHandler}>Sorting {isSortAscending ? 'Decending' : 'Ascending'}</Button>
+      {/* <Button className='btn btn-dark mb-2' onClick={changeSortingHandler}>Sorting {isSortAscending ? 'Decending' : 'Ascending'}</Button> */}
       <Card className="mx-auto" style={{ maxWidth: '150%', minWidth: '300px', maxHeight: '80vh'}}>
         <Card.Header as="h5" className="card-header-sticky">Inbox</Card.Header>
         <Card.Body style={{overflowY: 'auto' }}>
