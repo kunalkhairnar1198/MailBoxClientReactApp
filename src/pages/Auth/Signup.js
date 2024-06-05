@@ -2,10 +2,9 @@ import React, { useRef, useState } from 'react'
 import {Button, Card, CardBody, Col, Form, Nav, NavLink, Row, Spinner} from 'react-bootstrap';
 import classes from './Signup.module.css';   
 import {useDispatch, useSelector}  from 'react-redux'
-import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { AuthActions } from '../../../Store/Auth-Slice/auth-slice';
-import Forgotpass from './Forgotpass';
+import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
+import { AuthActions } from '../../Store/Auth-Slice/auth-slice';
 
 const Signup = () => {
     
@@ -145,7 +144,6 @@ const Signup = () => {
                 </Col>
                 
             </Row>
-            {/* <Forgotpass/> */}
     </section>
     </>
   )

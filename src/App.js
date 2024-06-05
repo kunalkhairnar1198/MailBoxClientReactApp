@@ -1,8 +1,8 @@
 import { Switch, Route, Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import Signup from "./components/pages/Auth/Signup";
 import MainNavigation from "./components/Layout/MainNavigation";
 import { useSelector } from "react-redux";
-import Forgotpass from "./components/pages/Auth/Forgotpass";
+import Signup from "./pages/Auth/Signup";
+import Forgotpass from "./pages/Auth/Forgotpass";
 
 function App() {
   const isAuthentication = useSelector(state => state.auth.isAuthenticated)

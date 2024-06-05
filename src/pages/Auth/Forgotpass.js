@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import {Button, Card, CardBody, Col, Form, Nav, NavLink, Row, Spinner} from 'react-bootstrap';
+import {Button, Card, CardBody, Col, Form,  Row} from 'react-bootstrap';
 import classes from './Signup.module.css';   
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
