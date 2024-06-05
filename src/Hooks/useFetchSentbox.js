@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
-import { LoaderActions } from '../../Store/UI-Slice/loader-slice'
-import { getSentMails } from '../../Store/Mail-Slice/mail-slice'
+import { LoaderActions } from '../Store/UI-Slice/loader-slice'
+import { getSentMails } from '../Store/Mail-Slice/mail-slice'
 
 const useFetchSentbox = () => {
     const mails = useSelector(state => state.mail.sentMail)

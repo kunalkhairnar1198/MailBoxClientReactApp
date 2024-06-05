@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {  Card, Col, Nav, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { getSentMails } from '../../../../Store/Mail-Slice/mail-slice'
+import { getSentMails } from '../../../Store/Mail-Slice/mail-slice'
 
 const SentMsgDetail = () => {
 const params = useParams()

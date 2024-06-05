@@ -4,10 +4,10 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from "react-draft-wysiwyg";
 import './Compose.css';
 import {useDispatch, useSelector} from 'react-redux'
-import { receivedMailsGet, sendRequestToMail } from '../../../Store/Mail-Slice/mail-slice';
-import { LoaderActions } from '../../../Store/UI-Slice/loader-slice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import Loader from '../../UI/Loader';
+import { receivedMailsGet, sendRequestToMail } from '../../Store/Mail-Slice/mail-slice';
+import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
+import Loader from '../../components/UI/Loader';
 
 const Compose = () => {
     console.log('modal')

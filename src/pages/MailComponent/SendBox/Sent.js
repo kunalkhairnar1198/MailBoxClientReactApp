@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, Table, Container } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import useFetchSentbox from '../../../Hooks/useFetchSentbox';
-import TableLoader from '../../../UI/TableLoader';
-import { DeleteHandler } from '../../../../Store/Mail-Slice/mail-slice';
 import { useDispatch } from 'react-redux';
+import TableLoader from '../../../components/UI/TableLoader';
+import { DeleteHandler } from '../../../Store/Mail-Slice/mail-slice';
+import useFetchSentbox from '../../../Hooks/useFetchSentbox';
 
 const Sent = () => {
   const {mails, isLoading} = useFetchSentbox()

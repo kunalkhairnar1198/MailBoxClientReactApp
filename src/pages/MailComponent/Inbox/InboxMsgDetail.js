@@ -1,10 +1,10 @@
 import { Card, Col, Nav, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import useFetchInbox from '../../../Hooks/useFetchInbox'
-import TableLoader from '../../../UI/TableLoader'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { markReadMail, receivedMailsGet } from '../../../../Store/Mail-Slice/mail-slice'
+import { markReadMail, receivedMailsGet } from '../../../Store/Mail-Slice/mail-slice'
+import useFetchInbox from '../../../Hooks/useFetchInbox'
+import TableLoader from '../../../components/UI/TableLoader'
 
 const InboxMsgDetail = () => {
     const { inboxId } = useParams();

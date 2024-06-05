@@ -1,8 +1,8 @@
 import  { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { receivedMailsGet } from '../../Store/Mail-Slice/mail-slice'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
-import { LoaderActions } from '../../Store/UI-Slice/loader-slice'
+import { LoaderActions } from '../Store/UI-Slice/loader-slice'
+import { receivedMailsGet } from '../Store/Mail-Slice/mail-slice'
 
 const sortItems =(Items, ascending) =>{
     return [...Items].sort((ItemA, ItemB)=>{

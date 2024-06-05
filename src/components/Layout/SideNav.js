@@ -5,11 +5,11 @@ import './SideNav.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoaderActions } from '../../Store/UI-Slice/loader-slice';
 import { Route, Switch, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
-import Compose from '../pages/MailComponent/Compose';
-import Inbox from '../pages/MailComponent/Inbox/Inbox';
-import Sent from '../pages/MailComponent/SendBox/Sent';
-import SentMsgDetail from '../pages/MailComponent/SendBox/SentMsgDetail';
-import InboxMsgDetail from '../pages/MailComponent/Inbox/InboxMsgDetail';
+import Compose from '../../pages/MailComponent/Compose';
+import Inbox from '../../pages/MailComponent/Inbox/Inbox';
+import InboxMsgDetail from '../../pages/MailComponent/Inbox/InboxMsgDetail';
+import Sent from '../../pages/MailComponent/SendBox/Sent';
+import SentMsgDetail from '../../pages/MailComponent/SendBox/SentMsgDetail';
 
 const SideNav = ({show, onHide}) => {
     const dispatch = useDispatch()

@@ -1,11 +1,10 @@
 import {Button, Card, Table, Container } from 'react-bootstrap';
-import { DeleteHandler, markReadMail } from '../../../../Store/Mail-Slice/mail-slice';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import Dot from '../../../UI/Dot';
+import { DeleteHandler, markReadMail } from '../../../Store/Mail-Slice/mail-slice';
+import Dot from '../../../components/UI/Dot';
+import TableLoader from '../../../components/UI/TableLoader';
 import useFetchInbox from '../../../Hooks/useFetchInbox';
-import TableLoader from '../../../UI/TableLoader';
-
 
 
 const Inbox = () => {
